@@ -1,5 +1,7 @@
 # Guarddog
 
+[![Build Status](https://travis-ci.org/codedokode/guarddog.svg?branch=master)](https://travis-ci.org/codedokode/guarddog)
+
 Guarddog is an utility in Go that executes a program while restricting a set of system calls it is allowed to make. Guarddog is also able to chroot(2) into a given directory and change user and group ids before running the program.
 
 Guarddog uses seccomp(2) with `SECCOMP_SET_MODE_FILTER` option to put a restriction so the kernel must support it. On attempt to make a call not specified in a list of allowed calls the kernel sends a `SIGKILL` signal that terminates the program.
@@ -10,9 +12,20 @@ First you need to install Go language compiler. This program is tested with `go1
 
 This program uses [libseccomp](https://github.com/seccomp/libseccomp) so you need to install it beforehands. On Debian or Ubuntu this can be done by running `./scripts/install.sh`. 
 
-Locate the source code so that it is inside your Go workspace in the src directory. For example, you can create a directory `/tmp/go/src/guarddog/` and copy repository contents there.
+Locate the source code so that it is inside your Go workspace in the `src/guarddog` directory. For example, you can create a directory `/tmp/go/src/guarddog/` and copy repository contents there. And then run the following command to set GOPATH:
+
+    export GOPATH=/tmp/go/
+
+By default (for example if you use `go get`) Go will try to install the code into `github.com/codedokode/guarddog` directory and that won't work. Because I don't want to write a github repository URL in every import.
 
 You also have to download a specific version of libseccomp-golang from https://github.com/seccomp/libseccomp-golang/tree/1b506fc7c24eec5a3693cdcbed40d9c226cfc6a1 (you can download newer versions but they are not guaranteered to work). The git repository contents should be copied to `vendor/github.com/seccomp/libseccomp-golang/` so that the `README` file is located at `vendor/github.com/seccomp/libseccomp-golang/README`.
+
+You can do this by running these commands from the root of the repository: 
+
+```sh
+git clone 'https://github.com/seccomp/libseccomp-golang.git' './vendor/github.com/seccomp/libseccomp-golang/'
+git -C './vendor/github.com/seccomp/libseccomp-golang/' checkout --detach 1b506fc7c24eec5a3693cdcbed40d9c226cfc6a1
+```
 
 ## Building
 
