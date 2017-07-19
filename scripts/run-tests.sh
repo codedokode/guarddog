@@ -3,6 +3,10 @@
 set -e
 cd "`dirname $0`/.."
 
+echo "Running go vet"
+# Do not stop if something fails
+./scripts/go.sh vet ./... || true
+
 echo "Running Go unit tests"
 ./scripts/go.sh test "$@" ./config ./seccomphelper ./util
 
