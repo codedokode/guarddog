@@ -5,8 +5,8 @@ go:
 install:
     - sudo apt-get update
     - ./scripts/install.sh
-    - git clone 'https://github.com/seccomp/libseccomp-golang.git' './vendor/github.com/seccomp/libseccomp-golang/'
-    - git -C './vendor/github.com/seccomp/libseccomp-golang/' checkout --detach 1b506fc7c24eec5a3693cdcbed40d9c226cfc6a1
+    - git clone 'https://github.com/seccomp/libseccomp-golang.git' './external/github.com/seccomp/libseccomp-golang/'
+    - git -C './external/github.com/seccomp/libseccomp-golang/' checkout --detach 1b506fc7c24eec5a3693cdcbed40d9c226cfc6a1
 script: ./scripts/run-tests.sh
 
 # By default Travis will try to install code into github.com/... folder

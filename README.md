@@ -18,13 +18,13 @@ Locate the source code so that it is inside your Go workspace in the `src/guardd
 
 By default (for example if you use `go get`) Go will try to install the code into `github.com/codedokode/guarddog` directory and that won't work. Because I don't want to write a github repository URL in every import.
 
-You also have to download a specific version of libseccomp-golang from https://github.com/seccomp/libseccomp-golang/tree/1b506fc7c24eec5a3693cdcbed40d9c226cfc6a1 (you can download newer versions but they are not guaranteered to work). The git repository contents should be copied to `vendor/github.com/seccomp/libseccomp-golang/` so that the `README` file is located at `vendor/github.com/seccomp/libseccomp-golang/README`.
+You also have to download a specific version of libseccomp-golang from https://github.com/seccomp/libseccomp-golang/tree/1b506fc7c24eec5a3693cdcbed40d9c226cfc6a1 (you can download newer versions but they are not guaranteered to work). The git repository contents should be copied to `external/github.com/seccomp/libseccomp-golang/` so that the `README` file is located at `external/github.com/seccomp/libseccomp-golang/README`.
 
 You can do this by running these commands from the root of the repository: 
 
 ```sh
-git clone 'https://github.com/seccomp/libseccomp-golang.git' './vendor/github.com/seccomp/libseccomp-golang/'
-git -C './vendor/github.com/seccomp/libseccomp-golang/' checkout --detach 1b506fc7c24eec5a3693cdcbed40d9c226cfc6a1
+git clone 'https://github.com/seccomp/libseccomp-golang.git' './external/github.com/seccomp/libseccomp-golang/'
+git -C './external/github.com/seccomp/libseccomp-golang/' checkout --detach 1b506fc7c24eec5a3693cdcbed40d9c226cfc6a1
 ```
 
 ## Building
@@ -68,5 +68,5 @@ on = some-value'
 
 ## License
 
-The program is distributed under [GNU Affero General Public License](https://www.gnu.org/licenses/agpl-3.0.en.html) version 3.0 or higher. The code in the `vendor/github.com/seccomp` folder is not a part of this program and is under BSD 2-Clause license.
+The program is distributed under [GNU Affero General Public License](https://www.gnu.org/licenses/agpl-3.0.en.html) version 3.0 or higher. The code in the `external/github.com/seccomp` folder is not a part of this program and is under its own license.
 

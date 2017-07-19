@@ -2,7 +2,7 @@ package seccomphelper
 
 import (
     "errors"
-    "guarddog/vendor/github.com/seccomp/libseccomp-golang" 
+    "guarddog/external/github.com/seccomp/libseccomp-golang" 
     "syscall"
     "unsafe"
 )

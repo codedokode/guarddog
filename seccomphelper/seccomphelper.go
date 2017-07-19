@@ -1,7 +1,7 @@
 package seccomphelper
 
 import (
-    "guarddog/vendor/github.com/seccomp/libseccomp-golang" 
+    "guarddog/external/github.com/seccomp/libseccomp-golang" 
     "fmt"
     "os"
 )

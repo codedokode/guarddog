@@ -7,7 +7,7 @@ import (
     "guarddog/config"
     "guarddog/util"
     "guarddog/seccomphelper"
-    "guarddog/vendor/github.com/seccomp/libseccomp-golang"
+    "guarddog/external/github.com/seccomp/libseccomp-golang"
 )
 
 func main() {
