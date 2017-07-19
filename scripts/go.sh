@@ -3,5 +3,8 @@
 # Sets up GOPATH and executes go command
 set -e
 dir="`dirname "$0"`"
-export GOPATH="`realpath "$dir/../../../"`"
+if [ -z ${GOPATH+x} ]
+then
+    export GOPATH="`realpath "$dir/../../../"`"
+fi
 exec go "$@"
