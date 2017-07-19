@@ -15,6 +15,49 @@ function expect_string() {
     fi
 }
 
+# Returns result in global variable '$output' 
+function run_command() {
+    local expect_zero="$1"
+    shift
+    local command="$@"
+    echo "Command: $command"
+    output=`$command`
+    local code=$?
+
+    if [ $expect_zero = "zero" ]
+    then 
+        if [ "$code" -ne 0 ]
+        then
+            echo "Expected zero exit code, got $code"
+            echo 
+            echo "Result of running under strace: "
+            strace -f $command
+            exit 1
+        fi
+
+        echo "Exit code of command was 0"
+        return 0
+    fi 
+
+    if [ "$expect_zero" = "nonzero" ]
+    then
+        if [ "$code" -eq 0 ]
+        then
+            echo "Expected non-zero exit code, got zero"
+            echo 
+            echo "Result of running under strace: "
+            strace -f $command
+            exit 1
+        fi
+
+        echo "Exit code of command was $code"
+        return 0
+    fi 
+
+    echo "First argument must be 'zero' or 'nonzero', given '$expect_zero'"
+    exit 2
+}
+
 # Minimal set of syscalls used by dynamic loader and standard library on i686 arch
 # Obtained by running strace -f /bin/true 
 # execve() is needed to start the program
@@ -30,44 +73,25 @@ do
     allowed_options+=("--allow=$syscall")
 done 
 
+echo 
 echo "Test: execve works when no filtering is set"
 command1="$BINARY $FLAGS -verbose -allow-any-syscalls -- /bin/echo yes"
-echo "Command: $command1"
-output1=`$command1` 
-code1=$?
-if [ "$code1" -ne 0 ]
-then 
-    echo "Expected exit code 0, got $code1"
-    exit 1
-fi
-expect_string "yes" "$output1"
+run_command zero $command1
+expect_string "yes" "$output"
 
-
-# echo with write should be successful
+echo 
 echo "Test: whether echo works with write allowed"
-command1="$BINARY $FLAGS -verbose -trap ${allowed_options[@]} --allow=write -- /bin/echo yes"
-echo "Command: $command1"
-output1=`$command1`
-code1=$?
-if [ "$code1" -ne 0 ]
-then 
-    echo "Expected exit code 0, got $code1"
-    exit 1
-fi
-expect_string "yes" "$output1"
+command1="$BINARY $FLAGS -verbose -trap ${allowed_options[@]} -allow=write -- /bin/echo yes"
+run_command zero $command1
+expect_string "yes" "$output"
 
-# echo should fail
+echo 
 echo "Test: whether echo fails if write is not allowed"
 command2="$BINARY $FLAGS -trap ${allowed_options[@]} -- /bin/echo no"
-echo "Command: $command2"
-output2=`$command2`
-code2=$?
-if [ "$code1" -ne 0 ]
-then 
-    echo "Expected non-zero exit code, got $code2"
-    exit 1
-fi
-expect_string "" "$output2"
+run_command nonzero $command2
+expect_string "" "$output"
 
-echo "Tests finished OK"
+echo 
+echo "Functional tests finished OK"
 exit 0
+

@@ -2,6 +2,7 @@ package seccomphelper
 
 import (
     "errors"
+    "fmt"
     "guarddog/external/github.com/seccomp/libseccomp-golang" 
     "syscall"
     "unsafe"
@@ -50,7 +51,8 @@ func ExecuteWithSeccomp(
     for _, syscallName := range allowedCalls {
         syscallId, err := seccomp.GetSyscallFromName(syscallName)
         if err != nil {
-            return err
+            return fmt.Errorf("Failed to find a number for syscall name '%s': %s", 
+                syscallName, err)
         }
 
         allowedCallNumbers[i] = C.int(syscallId)
