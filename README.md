@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/codedokode/guarddog.svg?branch=master)](https://travis-ci.org/codedokode/guarddog)
 
-Guarddog is an utility in Go that executes a program while restricting a set of system calls it is allowed to make. Guarddog is also able to chroot(2) into a given directory and change user and group ids before running the program.
+Guarddog is an utility in Go that executes a program while restricting a set of system calls it is allowed to make. Guarddog is also able to chroot(2) into a given directory and change user and group ids before running the program. This is done so that you don't have to put chroot program into the sandbox.
 
 Guarddog uses seccomp(2) with `SECCOMP_SET_MODE_FILTER` option to put a restriction so the kernel must support it. On attempt to make a call not specified in a list of allowed calls the kernel sends a `SIGKILL` signal that terminates the program.
 
