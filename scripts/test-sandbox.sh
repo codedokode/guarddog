@@ -24,7 +24,7 @@ function run_command() {
     output=`$command`
     local code=$?
 
-    if [ $expect_zero = "zero" ]
+    if [ $expect_zero == "zero" ]
     then 
         if [ "$code" -ne 0 ]
         then
@@ -39,7 +39,7 @@ function run_command() {
         return 0
     fi 
 
-    if [ "$expect_zero" = "nonzero" ]
+    if [ "$expect_zero" == "nonzero" ]
     then
         if [ "$code" -eq 0 ]
         then
@@ -62,6 +62,15 @@ function run_command() {
 # Obtained by running strace -f /bin/true 
 # execve() is needed to start the program
 ALLOWED_CALLS=( execve brk access mmap2 open fstat64 close read set_thread_area mprotect munmap exit_group )
+
+# Syscalls are different on different archs
+ARCH=`uname -m`
+if [ "$ARCH" == x86_64 ]
+then 
+    ALLOWED_CALLS+=( fstat mmap arch_prctl )
+fi 
+
+# ALLOWED_CALLS=( execve brk access mmap2 open fstat64 close read set_thread_area mprotect munmap exit_group )
 BINARY="$1"
 FLAGS=""
 
