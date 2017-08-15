@@ -11,3 +11,8 @@ script: ./scripts/run-tests.sh
 
 # By default Travis will try to install code into github.com/... folder
 go_import_path: guarddog
+
+notifications:
+    email:
+        on_success: never
+        on_failure: never
