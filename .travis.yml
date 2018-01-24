@@ -4,10 +4,10 @@ go:
     - '1.7'
 install:
     - sudo apt-get update
-    - echo "Before strace update"; strace --version
+    - echo "Before strace update"; strace -V
     # Strace in Travis CI wrongfully detects process as x32, trying to use a newer version
     - sudo apt-get install strace
-    - echo "After strace update"; strace --version
+    - echo "After strace update"; strace -V
     - ./scripts/install.sh
     - git clone 'https://github.com/seccomp/libseccomp-golang.git' './external/github.com/seccomp/libseccomp-golang/'
     - git -C './external/github.com/seccomp/libseccomp-golang/' checkout --detach 1b506fc7c24eec5a3693cdcbed40d9c226cfc6a1
