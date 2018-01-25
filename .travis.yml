@@ -4,6 +4,7 @@ go:
     - '1.7'
 install:
     - sudo apt-get update
+    - sudo apt-get install gdb 
     - strace -V
     - ./scripts/install.sh
     - git clone 'https://github.com/seccomp/libseccomp-golang.git' './external/github.com/seccomp/libseccomp-golang/'
