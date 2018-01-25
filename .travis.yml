@@ -4,10 +4,7 @@ go:
     - '1.7'
 install:
     - sudo apt-get update
-    - echo "Before strace update"; strace -V
-    # Strace in Travis CI wrongfully detects process as x32, trying to use a newer version
-    - sudo apt-get install strace
-    - echo "After strace update"; strace -V
+    - strace -V
     - ./scripts/install.sh
     - git clone 'https://github.com/seccomp/libseccomp-golang.git' './external/github.com/seccomp/libseccomp-golang/'
     - git -C './external/github.com/seccomp/libseccomp-golang/' checkout --detach 1b506fc7c24eec5a3693cdcbed40d9c226cfc6a1
@@ -19,11 +16,6 @@ after_failure:
 
 # By default Travis will try to install code into github.com/... folder
 go_import_path: guarddog
-
-# Check for core dumps and print their contents
-after_failure:
-    - echo "Looking for core files:"
-    - shopt -s nullglob; for file in "core*"; do echo "Corefile found: $file, starting gdb"; gdb -c "$file" guarddog -ex "thread apply all bt" -ex "set pagination 0" -batch; done
 
 notifications:
     email:
