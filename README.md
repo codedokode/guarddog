@@ -8,7 +8,14 @@ Guarddog uses seccomp(2) with `SECCOMP_SET_MODE_FILTER` option to put a restrict
 
 ## Installation
 
-First you need to install Go language compiler. This program is tested with `go1.3.3 linux/386` (can be checked with `go version`).
+You will need to install: 
+
+- golang (tested with `go1.3.3 linux/386`, can be checked with `go version`)
+- gcc (tested with 4.9.2, can be checked with `gcc --version`)
+- pkg-config (tested with 0.28, can be checked with `pkg-config --version`)
+- libseccomp-dev (tested with 2.1.1)
+- strace (tested with 4.9, can be checked with `strace -V`)
+- gdb (optional, if you want to view stack traces from core dumps)
 
 This program uses [libseccomp](https://github.com/seccomp/libseccomp) so you need to install it beforehands. On Debian or Ubuntu this can be done by running `./scripts/install.sh`. 
 
@@ -65,6 +72,10 @@ on = some-value'
  of SIGKILL. Might be useful for debugging
   -verbose=false: print debugging information
 ```
+
+## TODO 
+
+- use GODEBUG https://golang.org/pkg/runtime/
 
 ## License
 

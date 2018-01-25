@@ -31,7 +31,7 @@ function run_command() {
             echo "Expected zero exit code, got $code"
             echo 
             echo "Result of running under strace: "
-            strace -f $command
+            strace -f $command || true
             exit 1
         fi
 

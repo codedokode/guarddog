@@ -3,6 +3,9 @@
 set -e
 cd "`dirname $0`/.."
 
+# Strict checks
+export GODEBUG='cgocheck=2'
+
 echo "Running go vet"
 # Do not stop if something fails
 ./scripts/go.sh vet ./... || true
