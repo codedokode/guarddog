@@ -11,9 +11,10 @@ echo "Running Go unit tests"
 ./scripts/go.sh test "$@" ./config ./seccomphelper ./util
 
 echo "Building"
-./scripts/build.sh -v
+# Disable optimizations for easier debugging
+./scripts/build.sh -v -ccflags="-N" -gcflags="-N -l"
 
-echo "Running functinal tests"
+echo "Running functional tests"
 ./scripts/test-sandbox.sh ./guarddog
 code=$?
 echo "Exited with code $code"

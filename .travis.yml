@@ -7,7 +7,11 @@ install:
     - ./scripts/install.sh
     - git clone 'https://github.com/seccomp/libseccomp-golang.git' './external/github.com/seccomp/libseccomp-golang/'
     - git -C './external/github.com/seccomp/libseccomp-golang/' checkout --detach 1b506fc7c24eec5a3693cdcbed40d9c226cfc6a1
+    # Enable core dumps
+    - ulimit -c unlimited -S
 script: ./scripts/run-tests.sh
+after_failure: 
+    - ./scripts/collect-core-dumps.sh
 
 # By default Travis will try to install code into github.com/... folder
 go_import_path: guarddog
